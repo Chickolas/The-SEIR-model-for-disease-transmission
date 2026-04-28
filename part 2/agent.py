@@ -82,7 +82,7 @@ class Agent:
         #If none of the adjacent squares have an infected agent return false 
         return False
     
-    def update_state(self, lattice, lattice_size, periodic, beta, sigma, gamma):
+    def update_state(self, lattice, lattice_size, periodic, beta, sigma, gamma, p_reinfection):
         #Checks if the agent is susceptible to the virus
         if self.get_state == state_list["susceptible"]:
             #Checks whether any adjacent neighbour has been infected by the virus
@@ -102,6 +102,15 @@ class Agent:
             #Randomly cause the agent to recover based off gamma
             if np.random.random() < gamma:
                 self.set_state(state_list["recovered"])
+
+        #Added custom reinfection rate
+        elif self.get_state == state_list["recovered"]:
+            #Checks whether any adjacent neighbour has been infected by the virus
+            if self.check_neighbour_infected(lattice, lattice_size, periodic):
+                #Randomly cause the agent to recover based off the reinfection rate
+                if np.random.random() < p_reinfection:
+                    self.set_state(state_list["exposed"])
+
 
         #Updates the agent's state in the global lattice
         lattice[self.get_y, self.get_x] = self.get_state

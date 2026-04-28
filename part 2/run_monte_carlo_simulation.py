@@ -13,18 +13,18 @@ def run_monte_carlo():
             seed=1234
         ),
 
-        "low_density_outbreak": MonteCarlo(
+        "small_population": MonteCarlo(
             lattice_size=100,
             agent_count=100,
             p_exposed=0.05,
-            beta=0.5,
+            beta=1.0,
             sigma=0.1,
             gamma=0.05,
             periodic=True,
             seed=1234
         ),
 
-        "high_density_outbreak": MonteCarlo(
+        "large_population": MonteCarlo(
             lattice_size=100,
             agent_count=1000,
             p_exposed=0.05,
@@ -77,7 +77,43 @@ def run_monte_carlo():
             gamma=0.005,
             periodic=True,
             seed=1234
+        ),
+
+        "small_reinfection_rate": MonteCarlo(
+            lattice_size=100,
+            agent_count=250,
+            p_exposed=0.05,
+            beta=1.0,
+            sigma=0.1,
+            gamma=0.005,
+            periodic=True,
+            seed=1234,
+            p_reinfection=0.001
+        ),
+
+        "medium_reinfection_rate": MonteCarlo(
+            lattice_size=100,
+            agent_count=250,
+            p_exposed=0.05,
+            beta=1.0,
+            sigma=0.1,
+            gamma=0.005,
+            periodic=True,
+            seed=1234,
+            p_reinfection=0.01
+        ),
+        "large_reinfection_rate": MonteCarlo(
+            lattice_size=100,
+            agent_count=250,
+            p_exposed=0.05,
+            beta=1.0,
+            sigma=0.1,
+            gamma=0.005,
+            periodic=True,
+            seed=1234,
+            p_reinfection=0.05
         )
+        
     }
 
     for name, sim in cases.items():

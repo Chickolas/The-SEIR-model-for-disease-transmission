@@ -32,10 +32,6 @@ initial_condition_cases = [
 ]
 
 def main():
-    #Test the model is running correctly
-    test_non_negative()
-    test_population_is_conserved()
-
     #Deletes all old files in the figures folder
     delete_old_files()
 

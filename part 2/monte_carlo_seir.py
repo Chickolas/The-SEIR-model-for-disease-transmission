@@ -15,7 +15,7 @@ state_list = {
 }
 
 class MonteCarlo():
-    def __init__(self, lattice_size = 100, agent_count = 250, p_exposed = 0.05, beta = 1.0, sigma = 0.1, gamma = 0.005, periodic = True, seed = None):
+    def __init__(self, lattice_size = 100, agent_count = 250, p_exposed = 0.05, beta = 1.0, sigma = 0.1, gamma = 0.005, periodic = True, seed = None, p_reinfection=0.0):
         self._lattice_size = lattice_size
         self.agent_count = agent_count
         self.p_exposed = p_exposed
@@ -23,6 +23,7 @@ class MonteCarlo():
         self.sigma = sigma
         self.gamma = gamma
         self.periodic = periodic
+        self.p_reinfection = p_reinfection
 
         if seed is not None:
             np.random.seed(seed)
@@ -101,11 +102,12 @@ class MonteCarlo():
             #Try to move the agent and check for a state change
             for agent in self.get_agents:
                 agent.attempt_move(self.get_lattice, self.get_lattice_size, self.get_periodic,)
-                agent.update_state(self.get_lattice, self.get_lattice_size, self.get_periodic, self.beta, self.sigma, self.gamma)
+                agent.update_state(self.get_lattice, self.get_lattice_size, self.get_periodic, self.beta, self.sigma, self.gamma, self.p_reinfection)
 
             #Record the step
             self.record_step()
 
+    @staticmethod
     def delete_old_files():
         figures_folder = Path("part 2") / "figures"
         #If the folder doesn't exist, there is nothing to delete

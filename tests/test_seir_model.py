@@ -1,4 +1,9 @@
+import sys
+from pathlib import Path
 import numpy as np
+sys.path.append(str(Path(__file__).resolve().parents[1] / "part 1"))
+
+from monte_carlo_seir import MonteCarlo, state_list
 from seir_model import seir_solver
 
 def test_population_is_conserved():
