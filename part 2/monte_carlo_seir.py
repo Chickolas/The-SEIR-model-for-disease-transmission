@@ -32,7 +32,7 @@ class MonteCarlo():
 
     def initialise_agents(self):
         sites = []
-
+        
         for x in range(self.lattice_size):
             for y in range(self.lattice_size):
                 sites.append((x, y))
