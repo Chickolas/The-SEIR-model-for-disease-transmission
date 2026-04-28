@@ -57,3 +57,4 @@ class Agent:
             self.set_x(next_x)
             self.set_y(next_y)
             lattice[self.get_x(), self.get_y()] = self.state
+

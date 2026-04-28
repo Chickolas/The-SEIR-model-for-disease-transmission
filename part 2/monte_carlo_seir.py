@@ -24,6 +24,29 @@ class MonteCarlo():
             np.random.seed(seed)
 
         self.lattice = np.zeros((lattice_size, lattice_size), d_type=int)
+        self.agents = []
+
 
     def get_lattice_attributes(self):
         return self.lattice, self.lattice_size, self.periodic
+
+    def initialise_agents(self):
+        sites = []
+
+        for x in range(self.lattice_size):
+            for y in range(self.lattice_size):
+                sites.append((x, y))
+
+        chosen_sites = np.random.choice(len(sites), size = self.n_agents, replace = False)
+
+        for i in chosen_sites:
+            x, y = sites[i]
+
+            if np.random.random() < self.p_exposed:
+                state = state_list["exposed"]
+            else:
+                state = state_list["susceptible"]
+
+            agent = Agent(x, y, state)
+            self.agents.append(agent)
+            self.lattice[x, y] = state
