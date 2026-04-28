@@ -1,7 +1,9 @@
 import numpy as np
-from agent import Agent
 import matplotlib.pyplot as plt
 from matplotlib.colors import ListedColormap
+from pathlib import Path
+
+from agent import Agent
 
 # Numerical labels for each state
 state_list = {
@@ -104,8 +106,32 @@ class MonteCarlo():
             #Record the step
             self.record_step()
 
+    def delete_old_files():
+        figures_folder = Path("part 2") / "figures"
+        #If the folder doesn't exist, there is nothing to delete
+        if not figures_folder.exists():
+            return
+
+        # Delete all PNG files in the figures folder
+        for file in figures_folder.glob("*.png"):
+            file.unlink()
+
+    def save_file(self, name):
+        filename = name.lower()
+        filename = filename.replace(" ", "_")
+        filename = filename.replace(">", "greater_than")
+        filename = filename.replace("<", "less_than")
+        filename = filename.replace("=", "")
+        filename = filename.replace(":", "")
+        filename = filename.replace("/", "_")
+        filename = filename.replace("\\", "_")
+        figures_folder = Path("part 2") / "figures"
+        figures_folder.mkdir(parents=True, exist_ok=True)
+        plt.savefig(figures_folder / f"{filename}.png", dpi=300)
+        plt.close()
+
     #Plot the graphs with the given parameters
-    def seir_plot(self):
+    def seir_plot(self, title = "Monte Carlo SEIR simulation"):
         #Creates an evenly spaced time interval
         steps = np.arange(len(self.S_record))
 
@@ -118,13 +144,13 @@ class MonteCarlo():
 
         plt.xlabel("Monte Carlo step")
         plt.ylabel("Population")
-        plt.title("Monte Carlo SEIR simulation")
+        plt.title(title)
         plt.legend()
         plt.grid(True)
         plt.tight_layout()
-        plt.show()
+        self.save_file(title)
 
-    def lattice_plot(self):
+    def lattice_plot(self, title = "Monte Carlo SEIR lattice"):
         #Creates the colourmap
         colours = ["white", "blue", "orange", "green", "red"]
         cmap = ListedColormap(colours)
@@ -139,7 +165,7 @@ class MonteCarlo():
             vmax=4
         )
 
-        plt.title("Monte Carlo SEIR lattice")
+        plt.title(title)
         plt.xlabel("x position")
         plt.ylabel("y position")
         labels = ["Susceptible", "Exposed", "Infected", "Recovered"]
@@ -150,5 +176,5 @@ class MonteCarlo():
 
         plt.legend(loc="upper right")
         plt.tight_layout()
-        plt.show()
+        self.save_file(title)
 

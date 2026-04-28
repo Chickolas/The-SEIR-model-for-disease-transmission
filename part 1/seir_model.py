@@ -58,12 +58,23 @@ def seir_plot(s ,e ,i ,r ,t, name):
 def calculate_R0(beta, gamma, s0):
     return (beta / gamma) * s0
 
+def delete_old_files():
+    figures_folder = Path("part_2") / "figures"
+    #If the folder doesn't exist, there is nothing to delete
+    if not figures_folder.exists():
+        return
+
+    # Delete all PNG files in the figures folder
+    for file in figures_folder.glob("*.png"):
+        file.unlink()
+
 def save_file(name):
+    
     filename = name.lower()
     filename = filename.replace(" ", "_")
     filename = filename.replace(">", "greater_than")
     filename = filename.replace("<", "less_than")
     filename = filename.replace("=", "")
-    figures_folder = Path("figures")
-    figures_folder.mkdir(exist_ok=True)
+    figures_folder = Path("part 1") / "figures"
+    figures_folder.mkdir(parents=True, exist_ok=True)
     plt.savefig(figures_folder / f"{filename}.png", dpi=300)

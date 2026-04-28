@@ -1,5 +1,5 @@
 import numpy
-from seir_model import seir_solver, seir_plot, calculate_R0
+from seir_model import seir_solver, seir_plot, calculate_R0, delete_old_files
 from test_seir_model import test_non_negative, test_population_is_conserved
 
 y0 = [0.99, 0.01, 0.0, 0.0]
@@ -35,6 +35,9 @@ def main():
     #Test the model is running correctly
     test_non_negative()
     test_population_is_conserved()
+
+    #Deletes all old files in the figures folder
+    delete_old_files()
 
     #Combines all the cases from above
     all_cases = r0_cases + sigma_cases + gamma_cases + initial_condition_cases
