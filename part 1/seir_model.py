@@ -1,3 +1,4 @@
+from pathlib import Path
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.integrate import solve_ivp
@@ -50,8 +51,19 @@ def seir_plot(s ,e ,i ,r ,t, name):
     plt.title(f"SEIR model with {name}")
     plt.legend()
     plt.grid(True)
-    plt.show()
+    save_file(name)
+
 
 #Calculates R0 to add to the graphs
 def calculate_R0(beta, gamma, s0):
     return (beta / gamma) * s0
+
+def save_file(name):
+    filename = name.lower()
+    filename = filename.replace(" ", "_")
+    filename = filename.replace(">", "greater_than")
+    filename = filename.replace("<", "less_than")
+    filename = filename.replace("=", "")
+    figures_folder = Path("figures")
+    figures_folder.mkdir(exist_ok=True)
+    plt.savefig(figures_folder / f"{filename}.png", dpi=300)
