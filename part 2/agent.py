@@ -32,4 +32,3 @@ class Agent:
     def set_state(self, state):
         self.state = state
 
-    
