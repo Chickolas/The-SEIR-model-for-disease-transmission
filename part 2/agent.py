@@ -32,3 +32,28 @@ class Agent:
     def set_state(self, state):
         self.state = state
 
+    def attempt_move(self, lattice, lattice_size, periodic):
+        #Picks a random movement option from the list
+        moves = [(1,0), (0,1), (-1,0), (0,-1)]
+        dx,dy = moves[np.randint(len(moves))]
+
+        #Gets the new location of the agent
+        next_x = self.get_x() + dx
+        next_y = self.get_y() + dy
+
+        #If periodic wrap around to the other side
+        if periodic:
+            next_x = next_x % lattice_size
+            next_y = next_y % lattice_size
+        else: 
+            #If the agent tries to moves off screen stay in the same position
+            if next_x < 0 or next_x >= lattice_size or next_y < 0 or next_y >= lattice_size:
+                return
+    
+        #If the new location is inoccupied
+        if lattice[next_x, next_y] == state_list["empty"]:
+            #Move the agent to the new location
+            lattice[self.get_x(), self.get_y()] = None
+            self.set_x(next_x)
+            self.set_y(next_y)
+            lattice[self.get_x(), self.get_y()] = self.state

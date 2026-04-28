@@ -20,4 +20,10 @@ class MonteCarlo():
         self.gamma = gamma
         self.periodic = periodic
 
- 
+        if seed is not None:
+            np.random.seed(seed)
+
+        self.lattice = np.zeros((lattice_size, lattice_size), d_type=int)
+
+    def get_lattice_attributes(self):
+        return self.lattice, self.lattice_size, self.periodic
