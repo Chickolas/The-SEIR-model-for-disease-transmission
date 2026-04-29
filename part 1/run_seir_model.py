@@ -2,8 +2,6 @@ import numpy
 from seir_model import seir_solver, seir_plot, calculate_R0, delete_old_files
 from test_seir_model import test_non_negative, test_population_is_conserved
 
-y0 = [0.99, 0.01, 0.0, 0.0]
-
 #R0 growth vs decay
 r0_cases = [
     {"name": "R0 > 1", "beta": 1.0, "sigma": 1.0, "gamma": 0.1, "y0": [0.99, 0.01, 0.0, 0.0]},
