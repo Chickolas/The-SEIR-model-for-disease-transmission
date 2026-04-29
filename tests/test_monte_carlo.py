@@ -61,12 +61,9 @@ def test_beta_zero_prevents_new_infections():
 
     #With beta=0 no more susceptible should become exposed to the virus
     initial_susceptible = sim.S_record[0]
-    final_non_susceptible = (
-        sim.E_record[-1] + sim.I_record[-1] + sim.R_record[-1]
-    )
 
     #Checks no more agents become infected
-    assert final_non_susceptible <= 100 - initial_susceptible
+    assert sim.S_record[-1] == initial_susceptible
 
 
 def test_sigma_removes_exposed():
@@ -126,3 +123,23 @@ def test_starting_state_is_captured():
     assert len(sim.E_record) == 26
     assert len(sim.I_record) == 26
     assert len(sim.R_record) == 26
+
+def test_agent_overlap():
+    sim = MonteCarlo(
+        lattice_size=30,
+        agent_count=100,
+        p_exposed=0.1,
+        beta=1.0,
+        sigma=0.1,
+        gamma=0.01,
+        periodic=True,
+        seed=7
+    )
+
+    sim.run(100)
+
+    positions = [(agent.get_x, agent.get_y) for agent in sim.get_agents]
+
+    #Check that all agent's positions are unique
+    assert len(positions) == len(set(positions))
+    assert np.count_nonzero(sim.get_lattice) == 100
