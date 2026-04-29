@@ -22,17 +22,18 @@ Test2/
 │
 ├── part 1/
 │   ├── seir_model.py
-│   ├── test_seir_model.py
+│   ├── run_seir_model.py
 │   └── figures/
 │
 ├── part 2/
 │   ├── agent.py
 │   ├── monte_carlo_seir.py
-│   ├── run_monte_carlo.py
+│   ├── run_monte_carlo_simulation.py
 │   └── figures/
 │
 ├── tests/
-│   └── test_monte_carlo.py
+│   ├── test_monte_carlo.py
+|   └── test_seir_model.py
 │
 ├── README.md
 ├── requirements.txt
@@ -201,7 +202,7 @@ python -m pip install pytest
 
 Make sure you are running the scripts from the main project folder.
 ```
-python "part 2/run_monte_carlo.py"
+python "part 2/run_monte_carlo_simulation.py"
 ```
 **No infection spreads in the Monte Carlo model**
 
